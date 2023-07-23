@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Tic Tac Toe</title>
+ </head>
+ <style>
+ body {
+ text-align:center;
+ font-family:Arial;
+ }
+ table {
+ table-layout:fixed;
+ border: 3pt solid black;
+ border-collapse: collapse;
+ }
+ #info, #bt2, #zaza {
+ display:none;
+ }
+ #tb {
+ font-size:30pt;
+ width:35vw;
+ display:none;
+ margin:auto;
+ }
+ td {
+ text-align:center;
+ border: 3pt solid black;
+ border-collapse: collapse;
+ height:10vh;
+ }
+ button {
+ font-size:25pt;
+ cursor:pointer;
+ z-index:-99;
+ margin:3pt;
+ }
+ #content {
+ margin-top:11vh;
+ text-align:center;
+ font-size:18pt;
+ }
+ .ib {
+ width:100%;
+ height:10vh;
+ opacity:0.0;
+ }
+ .x {
+ color:red;
+ -webkit-text-stroke-width: 2pt;
+ -webkit-text-stroke-color: black;
+ }
+ .o {
+ color:blue;
+ -webkit-text-stroke-width: 2pt;
+ -webkit-text-stroke-color: black;
+ }
+ #s1 {
+ border-left:hidden;
+ border-top:hidden;
+ }
+ #s2 {
+ border-top:hidden;
+ }
+ #s3 {
+ border-top:hidden;
+ border-right:hidden;
+ }
+ #s4 {
+ border-left:hidden;
+ }
+ #s6 {
+ border-right:hidden;
+ }
+ #s7 {
+ border-left:hidden;
+ border-bottom:hidden;
+ }
+ #s8 {
+ border-bottom:hidden;
+ }
+ #s9 {
+ border-bottom:hidden;
+ border-right:hidden;
+ }
+ </style>
+ 
+ <!------------------------------------------------------------------------->
+ <script> // script for choosing modes
+ var mode; // 1 = singleplayer , 2 = multiplayer
+ var side;
+ var playerSide;
+ 
+ function showTable() {
+    document.getElementById("bt").style.display="none";
+	document.getElementById("tb").style.display="table";
+	document.getElementById("info").style.display="block";
+	document.getElementById("bt2").style.display="initial";
+ }
+ 
+ function info() {
+   var l = document.getElementById("zaza");
+     if(l.style.display=="none")
+	 {
+     l.style.display="block";
+	 } else if(l.style.display=="block"){
+	 l.style.display="none";
+	 } else {
+	 l.style.display="block";
+     }
+ }
+ 
+ function clearTable() { // including coordinates
+ overS = false;
+ overM = false;
+ turnS = 0;
+ turnM = 1;
+ S = [0,0,0, 0,0,0, 0,0,0];
+ M = [0,0,0, 0,0,0, 0,0,0];
+ document.getElementById("s1").innerHTML = '<button id="b1" class="ib" onclick="b1();"> &nbsp </button>';
+ document.getElementById("s2").innerHTML = '<button id="b2" class="ib" onclick="b2();"> &nbsp </button>';
+ document.getElementById("s3").innerHTML = '<button id="b3" class="ib" onclick="b3();"> &nbsp </button>';
+ document.getElementById("s4").innerHTML = '<button id="b4" class="ib" onclick="b4();"> &nbsp </button>';
+ document.getElementById("s5").innerHTML = '<button id="b5" class="ib" onclick="b5();"> &nbsp </button>';
+ document.getElementById("s6").innerHTML = '<button id="b6" class="ib" onclick="b6();"> &nbsp </button>';
+ document.getElementById("s7").innerHTML = '<button id="b7" class="ib" onclick="b7();"> &nbsp </button>';
+ document.getElementById("s8").innerHTML = '<button id="b8" class="ib" onclick="b8();"> &nbsp </button>';
+ document.getElementById("s9").innerHTML = '<button id="b9" class="ib" onclick="b9();"> &nbsp </button>';
+ document.getElementById("info").innerHTML = "";
+ }
+ 
+ function menu() {
+    clearTable();
+    document.getElementById("bt").style.display="block";
+	document.getElementById("tb").style.display="none";
+	document.getElementById("info").style.display="none";
+	document.getElementById("bt2").style.display="none";
+ }
+ 
+ function restart() {
+ clearTable();
+ // this is the part to re screen again
+  switch(mode) {
+    case 1 : 
+	sp();
+    break;
+    case 2 : 
+	mp();
+    break;	
+  }
+ }
+ 
+ 
+ function sp() {
+    playerSide = Math.floor(Math.random()*2);
+    mode = 1;
+	showTable();
+	sp2();
+ }
+ function mp() {
+    mode = 2;
+	showTable();
+	document.getElementById("info").innerHTML = "X = Player 1 <br> O = Player 2";
+ }
+ function b1() {
+    switch(mode) {
+	    case 1 : 
+		     b1S();
+		break;
+		case 2 : 
+		     b1M();
+		break;
+	}
+  }
+  function b2() {
+    switch(mode) {
+	    case 1 : 
+		     b2S();
+		break;
+		case 2 : 
+		     b2M();
+		break;
+	}
+  }
+  function b3() {
+    switch(mode) {
+	    case 1 : 
+		     b3S();
+		break;
+		case 2 : 
+		     b3M();
+		break;
+	}
+  }
+  function b4() {
+    switch(mode) {
+	    case 1 : 
+		     b4S();
+		break;
+		case 2 : 
+		     b4M();
+		break;
+	}
+  }
+  function b5() {
+    switch(mode) {
+	    case 1 : 
+		     b5S();
+		break;
+		case 2 : 
+		     b5M();
+		break;
+	}
+  }
+  function b6() {
+    switch(mode) {
+	    case 1 : 
+		     b6S();
+		break;
+		case 2 : 
+		     b6M();
+		break;
+	}
+  }
+  function b7() {
+    switch(mode) {
+	    case 1 : 
+		     b7S();
+		break;
+		case 2 : 
+		     b7M();
+		break;
+	}
+  }
+  function b8() {
+    switch(mode) {
+	    case 1 : 
+		     b8S();
+		break;
+		case 2 : 
+		     b8M();
+		break;
+	}
+  }
+  function b9() {
+    switch(mode) {
+	    case 1 : 
+		     b9S();
+		break;
+		case 2 : 
+		     b9M();
+		break;
+	}
+  }
+ </script>
+ 
+ <!------------------------------------------------------------------------->
+ <script> // script for singleplayer
+ // state for singleplayer
+ // 0 = empty , -1 = AI , 1 = Player
+ var S = [0,0,0, 0,0,0, 0,0,0]; // single player states
+ var turnS = 0; // 0 for player, 1 for computer ai
+ var overS = false; // if game over, default is false (in singleplayer)
+ var randomAI;
+ function sp2() {
+   if(playerSide==0) {
+    document.getElementById("info").innerHTML = "X = AI <br> O = Player";
+	turnS = 1;
+	AIDecide();
+   } else if(playerSide==1) {
+    document.getElementById("info").innerHTML = "X = Player <br> O = AI";
+    turnS = 0;
+   }
+ }
+ 
+ function AIDecide() {
+    ManualProbability();
+ }
+ 
+ function ManualProbability() {
+    if(!overS && turnS==1) {
+	    if(S[0]==-1 && S[1]==-1 && S[2]==0) {
+		   S[2] = -1;
+		   AIWrite();
+		} else if(S[1]==-1 && S[2]==-1 && S[0]==0) {
+		   S[0] = -1;
+		   AIWrite();
+		} else if(S[3]==-1 && S[4]==-1 && S[5]==0) {
+		   S[5] = -1;
+		   AIWrite();
+		} else if(S[4]==-1 && S[5]==-1 && S[3]==0) {
+		   S[3] = -1;
+		   AIWrite();
+		} else if(S[6]==-1 && S[7]==-1 && S[8]==0) {
+		   S[8] = -1;
+		   AIWrite();
+		} else if(S[7]==-1 && S[8]==-1 && S[6]==0) {
+		   S[6] = -1;
+		   AIWrite();
+		} else if(S[0]==-1 && S[3]==-1 && S[6]==0) {
+		   S[6] = -1;
+		   AIWrite();
+		} else if(S[3]==-1 && S[6]==-1 && S[0]==0) {
+		   S[0] = -1;
+		   AIWrite();
+		} else if(S[1]==-1 && S[4]==-1 && S[7]==0) {
+		   S[7] = -1;
+		   AIWrite();
+		} else if(S[4]==-1 && S[7]==-1 && S[1]==0) {
+		   S[1] = -1;
+		   AIWrite();
+		} else if(S[2]==-1 && S[5]==-1 && S[8]==0) {
+		   S[8] = -1;
+		   AIWrite();
+		} else if(S[5]==-1 && S[8]==-1 && S[2]==0) {
+		   S[2] = -1;
+		   AIWrite();
+		} else if(S[0]==-1 && S[4]==-1 && S[8]==0) {
+		   S[8] = -1;
+		   AIWrite();
+		} else if(S[4]==-1 && S[8]==-1 && S[0]==0) {
+		   S[0] = -1;
+		   AIWrite();
+		} else if(S[6]==-1 && S[4]==-1 && S[2]==0) {
+		   S[2] = -1;
+		   AIWrite();
+		} else if(S[4]==-1 && S[2]==-1 && S[6]==0) {
+		   S[6] = -1;
+		   AIWrite();
+		} else if(S[0]==-1 && S[2]==-1 && S[1]==0) {
+		   S[1] = -1;
+		   AIWrite();
+		} else if(S[3]==-1 && S[5]==-1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		} else if(S[6]==-1 && S[8]==-1 && S[7]==0) {
+		   S[7] = -1;
+		   AIWrite();
+		} else if(S[0]==-1 && S[6]==-1 && S[3]==0) {
+		   S[3] = -1;
+		   AIWrite();
+		} else if(S[1]==-1 && S[7]==-1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		} else if(S[2]==-1 && S[8]==-1 && S[5]==0) {
+		   S[5] = -1;
+		   AIWrite();
+		} else if(S[0]==-1 && S[8]==-1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		} else if(S[2]==-1 && S[6]==-1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		}
+	
+	    else if(S[0]==1 && S[1]==1 && S[2]==0) {
+		   S[2] = -1;
+		   AIWrite();
+		} else if(S[1]==1 && S[2]==1 && S[0]==0) {
+		   S[0] = -1;
+		   AIWrite();
+		} else if(S[3]==1 && S[4]==1 && S[5]==0) {
+		   S[5] = -1;
+		   AIWrite();
+		} else if(S[4]==1 && S[5]==1 && S[3]==0) {
+		   S[3] = -1;
+		   AIWrite();
+		} else if(S[6]==1 && S[7]==1 && S[8]==0) {
+		   S[8] = -1;
+		   AIWrite();
+		} else if(S[7]==1 && S[8]==1 && S[6]==0) {
+		   S[6] = -1;
+		   AIWrite();
+		} else if(S[0]==1 && S[3]==1 && S[6]==0) {
+		   S[6] = -1;
+		   AIWrite();
+		} else if(S[3]==1 && S[6]==1 && S[0]==0) {
+		   S[0] = -1;
+		   AIWrite();
+		} else if(S[1]==1 && S[4]==1 && S[7]==0) {
+		   S[7] = -1;
+		   AIWrite();
+		} else if(S[4]==1 && S[7]==1 && S[1]==0) {
+		   S[1] = -1;
+		   AIWrite();
+		} else if(S[2]==1 && S[5]==1 && S[8]==0) {
+		   S[8] = -1;
+		   AIWrite();
+		} else if(S[5]==1 && S[8]==1 && S[2]==0) {
+		   S[2] = -1;
+		   AIWrite();
+		} else if(S[0]==1 && S[4]==1 && S[8]==0) {
+		   S[8] = -1;
+		   AIWrite();
+		} else if(S[4]==1 && S[8]==1 && S[0]==0) {
+		   S[0] = -1;
+		   AIWrite();
+		} else if(S[6]==1 && S[4]==1 && S[2]==0) {
+		   S[2] = -1;
+		   AIWrite();
+		} else if(S[4]==1 && S[2]==1 && S[6]==0) {
+		   S[6] = -1;
+		   AIWrite();
+		} else if(S[0]==1 && S[2]==1 && S[1]==0) {
+		   S[1] = -1;
+		   AIWrite();
+		} else if(S[3]==1 && S[5]==1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		} else if(S[6]==1 && S[8]==1 && S[7]==0) {
+		   S[7] = -1;
+		   AIWrite();
+		} else if(S[0]==1 && S[6]==1 && S[3]==0) {
+		   S[3] = -1;
+		   AIWrite();
+		} else if(S[1]==1 && S[7]==1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		} else if(S[2]==1 && S[8]==1 && S[5]==0) {
+		   S[5] = -1;
+		   AIWrite();
+		} else if(S[0]==1 && S[8]==1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		} else if(S[2]==1 && S[6]==1 && S[4]==0) {
+		   S[4] = -1;
+		   AIWrite();
+		}
+		else {
+		   RandomizerAI();
+		}
+	}
+	check();
+ }
+ 
+ function RandomizerAI() {
+   randomAI = Math.floor(Math.random()*9);
+   if(S[randomAI]==0 && !overS && turnS==1) {
+    S[randomAI] = -1;
+	AIWrite();
+   } else {
+     RandomizerAI();
+   }
+   check();
+ }
+ 
+ function check() {
+    if( // if player wins
+	S[0]==1 && S[1]==1 && S[2]==1 ||
+	S[3]==1 && S[4]==1 && S[5]==1 ||
+	S[6]==1 && S[7]==1 && S[8]==1 ||
+	S[0]==1 && S[3]==1 && S[6]==1 ||
+	S[1]==1 && S[4]==1 && S[7]==1 ||
+	S[2]==1 && S[5]==1 && S[8]==1 ||
+	S[0]==1 && S[4]==1 && S[8]==1 ||
+	S[6]==1 && S[4]==1 && S[2]==1 ) {
+	  document.getElementById("info").innerHTML = "Human Player Won!";
+	  overS = true;
+	} else if ( // if AI wins
+	S[0]==-1 && S[1]==-1 && S[2]==-1 ||
+	S[3]==-1 && S[4]==-1 && S[5]==-1 ||
+	S[6]==-1 && S[7]==-1 && S[8]==-1 ||
+	S[0]==-1 && S[3]==-1 && S[6]==-1 ||
+	S[1]==-1 && S[4]==-1 && S[7]==-1 ||
+	S[2]==-1 && S[5]==-1 && S[8]==-1 ||
+	S[0]==-1 && S[4]==-1 && S[8]==-1 ||
+	S[6]==-1 && S[4]==-1 && S[2]==-1 ) {
+	  document.getElementById("info").innerHTML = "Computer Player / AI Won!";
+	  overS = true;
+	} else if(S.indexOf(0)==-1) { // if no empty squares has been found
+	  document.getElementById("info").innerHTML = "Draw / Tie";
+	  overS = true;
+	}
+ }
+ 
+ function AIWrite() { // the process of AI Writing on the table
+    if(playerSide==0) {
+	   if(S[0]==-1) {
+	   document.getElementById("s1").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[1]==-1) {
+	   document.getElementById("s2").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[2]==-1) {
+	   document.getElementById("s3").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[3]==-1) {
+	   document.getElementById("s4").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[4]==-1) {
+	   document.getElementById("s5").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[5]==-1) {
+	   document.getElementById("s6").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[6]==-1) {
+	   document.getElementById("s7").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[7]==-1) {
+	   document.getElementById("s8").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	   if(S[8]==-1) {
+	   document.getElementById("s9").innerHTML = "<a class='x'>X</a>";
+	   turnS = 0;
+	   }
+	} else if(playerSide==1) {
+	   if(S[0]==-1) {
+	   document.getElementById("s1").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[1]==-1) {
+	   document.getElementById("s2").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[2]==-1) {
+	   document.getElementById("s3").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[3]==-1) {
+	   document.getElementById("s4").innerHTML = "<a class='o'>O</a>";
+	   
+	   turnS = 0;
+	   }
+	   if(S[4]==-1) {
+	   document.getElementById("s5").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[5]==-1) {
+	   document.getElementById("s6").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[6]==-1) {
+	   document.getElementById("s7").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[7]==-1) {
+	   document.getElementById("s8").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	   if(S[8]==-1) {
+	   document.getElementById("s9").innerHTML = "<a class='o'>O</a>";
+	   turnS = 0;
+	   }
+	}
+ }
+ 
+ function b1S() {
+    if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s1").innerHTML = "<a class='o'>O</a>";
+	S[0] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s1").innerHTML = "<a class='x'>X</a>";
+	S[0] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b2S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s2").innerHTML = "<a class='o'>O</a>";
+	S[1] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s2").innerHTML = "<a class='x'>X</a>";
+	S[1] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b3S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s3").innerHTML = "<a class='o'>O</a>";
+	S[2] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s3").innerHTML = "<a class='x'>X</a>";
+	S[2] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b4S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s4").innerHTML = "<a class='o'>O</a>";
+	S[3] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s4").innerHTML = "<a class='x'>X</a>";
+	S[3] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b5S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s5").innerHTML = "<a class='o'>O</a>";
+	S[4] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s5").innerHTML = "<a class='x'>X</a>";
+	S[4] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b6S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s6").innerHTML = "<a class='o'>O</a>";
+	S[5] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s6").innerHTML = "<a class='x'>X</a>";
+	S[5] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b7S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s7").innerHTML = "<a class='o'>O</a>";
+	S[6] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s7").innerHTML = "<a class='x'>X</a>";
+	S[6] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b8S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s8").innerHTML = "<a class='o'>O</a>";
+	S[7] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s8").innerHTML = "<a class='x'>X</a>";
+	S[7] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ function b9S() {
+   if(turnS==0 && !overS && playerSide==0) {
+	document.getElementById("s9").innerHTML = "<a class='o'>O</a>";
+	S[8] = 1;
+	turnS = 1;
+	} else if(turnS==0 && !overS && playerSide==1) {
+	document.getElementById("s9").innerHTML = "<a class='x'>X</a>";
+	S[8] = 1;
+	turnS = 1;
+	}
+	check();
+	AIDecide();
+ }
+ </script>
+ 
+ <!------------------------------------------------------------------------->
+ <script> // script for multiplayer
+ // state for multiplayer
+ // 0 = empty , 1 = Player 1 (X) , -1 = Player 2 (O)
+ var M = [0,0,0, 0,0,0, 0,0,0,]; // multi player states
+ var turnM = 1; // player 1 and player 2, turn in multiplayer
+ var overM = false; // if game over, default is false (in multiplayer)
+ 
+ function b1M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s1").innerHTML = "<a class='x'>X</a>";
+		 M[0] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s1").innerHTML = "<a class='o'>O</a>";
+		 M[0] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b2M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s2").innerHTML = "<a class='x'>X</a>";
+		 M[1] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s2").innerHTML = "<a class='o'>O</a>"
+		 M[1] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b3M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s3").innerHTML = "<a class='x'>X</a>";
+		 M[2] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s3").innerHTML = "<a class='o'>O</a>";
+		 M[2] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b4M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s4").innerHTML = "<a class='x'>X</a>";
+		 M[3] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s4").innerHTML = "<a class='o'>O</a>";
+		 M[3] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b5M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s5").innerHTML = "<a class='x'>X</a>";
+		 M[4] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s5").innerHTML = "<a class='o'>O</a>";
+		 M[4] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b6M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s6").innerHTML = "<a class='x'>X</a>";
+		 M[5] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s6").innerHTML = "<a class='o'>O</a>";
+		 M[5] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b7M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s7").innerHTML = "<a class='x'>X</a>";
+		 M[6] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s7").innerHTML = "<a class='o'>O</a>";
+		 M[6] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b8M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s8").innerHTML = "<a class='x'>X</a>";
+		 M[7] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s8").innerHTML = "<a class='o'>O</a>";
+		 M[7] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function b9M() {
+    if(turnM==1 && !overM) {
+	     document.getElementById("s9").innerHTML = "<a class='x'>X</a>";
+		 M[8] = 1;
+	     turnM = 2;
+	} else if (turnM==2 && !overM) {
+	     document.getElementById("s9").innerHTML = "<a class='o'>O</a>";
+		 M[8] = 2;
+	     turnM = 1;
+	}
+	WinConditionM();
+ }
+ function WinConditionM() {
+    if(M[0]==1 && M[1]==1 && M[2]==1 ||
+	M[3]==1 && M[4]==1 && M[5]==1 ||
+	M[6]==1 && M[7]==1 && M[8]==1 ||
+	M[0]==1 && M[3]==1 && M[6]==1 ||
+	M[1]==1 && M[4]==1 && M[7]==1 ||
+	M[2]==1 && M[5]==1 && M[8]==1 ||
+	M[0]==1 && M[4]==1 && M[8]==1 ||
+	M[6]==1 && M[4]==1 && M[2]==1) {
+	  // actions here
+	  document.getElementById("info").innerHTML = "Player 1 Won!";
+	  overM = true;
+	  // actions ends here
+	} else if (
+	M[0]==2 && M[1]==2 && M[2]==2 ||
+	M[3]==2 && M[4]==2 && M[5]==2 ||
+	M[6]==2 && M[7]==2 && M[8]==2 ||
+	M[0]==2 && M[3]==2 && M[6]==2 ||
+	M[1]==2 && M[4]==2 && M[7]==2 ||
+	M[2]==2 && M[5]==2 && M[8]==2 ||
+	M[0]==2 && M[4]==2 && M[8]==2 ||
+	M[6]==2 && M[4]==2 && M[2]==2) {
+	  // actions here
+	  document.getElementById("info").innerHTML = "Player 2 Won!";
+	  overM = true;
+	  // actions ends here
+	} else if (M.indexOf(0)==-1) { // if no empty boxes found
+	 // actions here
+	  document.getElementById("info").innerHTML = "Draw / Tie";
+	  overM = true;
+	  // actions ends here
+	}
+ }
+ </script>
+ 
+ <!------------------------------------------------------------------------->
+ <body>
+  <div id="content">
+  <div id="info"></div>
+  <table id="tb">
+  <tr>
+   <td id="s1"><button id="b1" class="ib" onclick="b1();"> &nbsp </button></td>
+   <td id="s2"><button id="b2" class="ib" onclick="b2();"> &nbsp </button></td>
+   <td id="s3"><button id="b3" class="ib" onclick="b3();"> &nbsp </button></td>
+  </tr>
+  <tr>
+   <td id="s4"><button id="b4" class="ib" onclick="b4();"> &nbsp </button></td>
+   <td id="s5"><button id="b5" class="ib" onclick="b5();"> &nbsp </button></td>
+   <td id="s6"><button id="b6" class="ib" onclick="b6();"> &nbsp </button></td>
+  </tr>
+  <tr>
+   <td id="s7"><button id="b7" class="ib" onclick="b7();"> &nbsp </button></td>
+   <td id="s8"><button id="b8" class="ib" onclick="b8();"> &nbsp </button></td>
+   <td id="s9"><button id="b9" class="ib" onclick="b9();"> &nbsp </button></td>
+  </tr>
+  </table><br>
+  <div id="bt2">
+  <button onclick="restart();">Restart</button>
+  <button onclick="menu();">Menu</button>
+  </div>
+  <div id="bt"><br><br>
+   Tic Tac Toe by<br>
+   Khian Victory D. Calderon<br><br>
+   <button onclick="sp();">Singleplayer</button><br>
+   <button onclick="mp();">Multiplayer</button>
+   <br><br>
+   <button onclick="info();">Info</button>
+    <div id="zaza">
+	 Singleplayer is random side, (whether X or O)<br>
+	 Multiplayer is alternating player (X first)<br>
+	 Made using HTML Javascript<br><br>
+	 Why this tic tac toe? <br>
+	 - Instant reply from AI <br>
+	 - Medium difficulty <br>
+	 - Fast interaction <br>
+	 - Playable offline <br>
+	 - Art design of css <br>
+	</div>
+   </div>
+  </div>
+ </body>
+</html>
